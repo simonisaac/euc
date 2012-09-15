@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>euc</artifactId>
+		<groupId>com.msilm.euc</groupId>
+		<version>1.0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>com.msilm.euc</groupId>
+	<artifactId>euc.nodeservice</artifactId>
+	<version>1.0.0.1-SNAPSHOT</version>
+	<name>EUC Node Service</name>
+
+	<dependencies>
+	
+		<dependency>
+			<groupId>com.msilm.euc</groupId>
+			<artifactId>euc.service</artifactId>
+			<version>1.0.0.1-SNAPSHOT</version>
+			<type>jar</type>
+			<scope>provided</scope>	
+		</dependency>
+		
+		<dependency>
+			<groupId>org.sri.nodeservice</groupId>
+			<artifactId>nodeservice.core</artifactId>
+			<version>${nodeservice.version}</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.sri.nodeservice</groupId>
+			<artifactId>nodeservice.core.nodemgr</artifactId>
+			<version>${nodeservice.version}</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.sri.nodeservice</groupId>
+			<artifactId>nodeservice.transform.excel</artifactId>
+			<version>${nodeservice.version}</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+        	<groupId>org.springframework.security</groupId>
+        	<artifactId>spring-security-core</artifactId>
+        	<version>${spring-security.version}</version>
+        </dependency>
+	</dependencies>
+</project>

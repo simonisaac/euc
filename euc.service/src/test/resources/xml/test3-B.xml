@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map:sheetDefinition xmlns:map="http://excel.transform.nodeservice.sri.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://excel.transform.nodeservice.sri.org nodeExcelSchema.xsd ">
+  <map:sheetName>testSheet</map:sheetName>
+  <map:sheetId>testSheet-3</map:sheetId>
+  <map:sheetRootNodeType>testExcelRoot</map:sheetRootNodeType>
+  <map:sheetNodeType>test3BSheetType</map:sheetNodeType>
+  <map:sheetDescription>test3 Description</map:sheetDescription>
+  <map:startRow>4</map:startRow>
+  <map:endRow>9</map:endRow>
+  
+  <map:column>
+    <map:columnIndex>0</map:columnIndex>
+    <map:columnName>A - String</map:columnName>
+  </map:column>
+  
+  <map:column>
+    <map:columnIndex>1</map:columnIndex>
+    <map:columnName>B - Number</map:columnName>
+  </map:column>
+  
+  <map:column>
+    <map:columnIndex>2</map:columnIndex>
+    <map:columnName>C - Decimal</map:columnName>
+  </map:column>
+  
+  <map:column>
+    <map:columnIndex>3</map:columnIndex>    
+    <map:columnName>D - Date</map:columnName>
+    <map:dateType>true</map:dateType>
+  </map:column>
+  
+</map:sheetDefinition>

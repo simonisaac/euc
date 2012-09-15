@@ -1,0 +1,971 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="flows1">
+    <global-unknown entity-id="fbfeefb9-7e5a-41ed-8f67-93ce692889a9">
+        <content>&lt;context:property-placeholder xmlns:context=&quot;http://www.springframework.org/schema/context&quot; location=&quot;euc.properties&quot;/&gt;</content>
+    </global-unknown>
+    <global-unknown entity-id="7622da85-bfa7-4552-97b1-4396e5facd59">
+        <content>&lt;mule-ss:security-manager xmlns:mule-ss=&quot;http://www.mulesoft.org/schema/mule/spring-security&quot; name=&quot;_muleSecurityManager&quot;&gt;  
+        &lt;mule-ss:delegate-security-provider name=&quot;memory-provider&quot; delegate-ref=&quot;authenticationManager&quot;/&gt; 
+    &lt;/mule-ss:security-manager&gt;</content>
+    </global-unknown>
+    <global-unknown wrapNSURL="http://www.springframework.org/schema/beans" wrapNSPref="spring" wrapIn="beans" entity-id="6e5ec30d-3513-432b-87bd-ed9f7b0866c9">
+        <content>&lt;ss:authentication-manager xmlns:ss=&quot;http://www.springframework.org/schema/security&quot; alias=&quot;authenticationManager&quot;&gt;  
+            &lt;ss:authentication-provider&gt; 
+                &lt;ss:user-service id=&quot;userService&quot; properties=&quot;classpath:users.properties&quot;/&gt; 
+            &lt;/ss:authentication-provider&gt; 
+        &lt;/ss:authentication-manager&gt;</content>
+    </global-unknown>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="48a7d7af-cfca-4d9e-ab38-734ad8d33da8">
+        <properties>
+            <property value="accessDecisionManager" name="id"/>
+            <property value="org.springframework.security.access.vote.AffirmativeBased" name="class"/>
+            <property name="parent"/>
+            <property name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                <property value="decisionVoters" name="name"/>
+                <property-collection name="@http://www.springframework.org/schema/beans/list;1">
+                    <property-collection name="@http://www.springframework.org/schema/beans/ref;1">
+                        <property value="roleVoter" name="bean"/>
+                    </property-collection>
+                </property-collection>
+            </property-collection>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="222418cf-2575-406e-9e3e-d06d28c56935">
+        <properties>
+            <property value="roleVoter" name="id"/>
+            <property value="org.springframework.security.access.vote.RoleVoter" name="class"/>
+            <property name="parent"/>
+            <property name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="d0ff857a-aebd-4b47-812f-4504d2271dc7">
+        <properties>
+            <property value="autoProxyCreator" name="id"/>
+            <property value="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator" name="class"/>
+            <property name="parent"/>
+            <property name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                <property value="interceptorNames" name="name"/>
+                <property-collection name="@http://www.springframework.org/schema/beans/list;1">
+                    <property-collection name="@http://www.springframework.org/schema/beans/value;1">
+                        <property value="eucComponentSecurity" name=""/>
+                    </property-collection>
+                    <property-collection name="@http://www.springframework.org/schema/beans/value;2">
+                        <property value="eucNodeServiceTransactionInterceptor" name=""/>
+                    </property-collection>
+                    <property-collection name="@http://www.springframework.org/schema/beans/value;3">
+                        <property value="concurrentCheckAdvisor" name=""/>
+                    </property-collection>
+                </property-collection>
+            </property-collection>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;1">
+                <property value="beanNames" name="name"/>
+                <property-collection name="@http://www.springframework.org/schema/beans/list;1">
+                    <property-collection name="@http://www.springframework.org/schema/beans/value;1">
+                        <property value="eucNodeService" name=""/>
+                    </property-collection>
+                </property-collection>
+            </property-collection>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;2">
+                <property value="proxyTargetClass" name="name"/>
+                <property value="true" name="value"/>
+            </property-collection>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="fe756589-a750-4a51-9e52-077b8d19bf1a">
+        <properties>
+            <property value="eucComponentSecurity" name="id"/>
+            <property value="org.springframework.security.access.intercept.aopalliance.MethodSecurityInterceptor" name="class"/>
+            <property name="parent"/>
+            <property name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                <property value="authenticationManager" name="ref"/>
+                <property value="authenticationManager" name="name"/>
+            </property-collection>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;1">
+                <property value="accessDecisionManager" name="ref"/>
+                <property value="accessDecisionManager" name="name"/>
+            </property-collection>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;2">
+                <property value="securityMetadataSource" name="name"/>
+                <property-collection name="@http://www.springframework.org/schema/beans/value;1">
+                    <property value="com.msilm.euc.nodeservice.EucNodeService.getNode=ROLE_EUC_USER com.msilm.euc.nodeservice.EucNodeService.retrieveNodes=ROLE_EUC_USER com.msilm.euc.nodeservice.EucNodeService.createNode=ROLE_ADMIN com.msilm.euc.nodeservice.EucNodeService.updateNode=ROLE_ADMIN" name=""/>
+                </property-collection>
+            </property-collection>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="f5e8ffe5-6a56-407e-85bc-b8e798a37df5">
+        <properties>
+            <property value="concurrentCheckInterceptor" name="id"/>
+            <property value="com.msilm.euc.nodeservice.interceptor.ConcurrentCheckInterceptor" name="class"/>
+            <property name="parent"/>
+            <property name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                <property value="eucNodePersistenceHandler" name="ref"/>
+                <property value="eucNodePersistenceHandler" name="name"/>
+            </property-collection>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="514ddcae-966e-4e38-8682-e32ccbe79f44">
+        <properties>
+            <property value="concurrentCheckAdvisor" name="id"/>
+            <property value="org.springframework.aop.support.RegexpMethodPointcutAdvisor" name="class"/>
+            <property name="parent"/>
+            <property name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                <property value="concurrentCheckInterceptor" name="ref"/>
+                <property value="advice" name="name"/>
+            </property-collection>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;1">
+                <property value="patterns" name="name"/>
+                <property-collection name="@http://www.springframework.org/schema/beans/list;1">
+                    <property-collection name="@http://www.springframework.org/schema/beans/value;1">
+                        <property value="com.msilm.euc.nodeservice.EucNodeService.updateNode" name=""/>
+                    </property-collection>
+                </property-collection>
+            </property-collection>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="0da2589b-5262-4188-8817-5bc3e88f6cab">
+        <properties>
+            <property value="txManager" name="id"/>
+            <property value="org.springframework.jdbc.datasource.DataSourceTransactionManager" name="class"/>
+            <property name="parent"/>
+            <property name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                <property value="eucDataSource" name="ref"/>
+                <property value="dataSource" name="name"/>
+            </property-collection>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="0f4af2aa-94a0-4bfb-bcaf-132f39d2db40">
+        <properties>
+            <property value="eucNodeServiceTransactionInterceptor" name="id"/>
+            <property value="org.springframework.transaction.interceptor.TransactionInterceptor" name="class"/>
+            <property name="parent"/>
+            <property name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                <property value="txManager" name="ref"/>
+                <property value="transactionManager" name="name"/>
+            </property-collection>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;1">
+                <property value="transactionAttributes" name="name"/>
+                <property-collection name="@http://www.springframework.org/schema/beans/props;1">
+                    <property-collection name="@http://www.springframework.org/schema/beans/prop;3">
+                        <property value="PROPAGATION_SUPPORTS" name="text"/>
+                        <property value="get*" name="key"/>
+                    </property-collection>
+                    <property-collection name="@http://www.springframework.org/schema/beans/prop;4">
+                        <property value="PROPAGATION_SUPPORTS" name="text"/>
+                        <property value="retrieve*" name="key"/>
+                    </property-collection>
+                    <property-collection name="@http://www.springframework.org/schema/beans/prop;1">
+                        <property value="PROPAGATION_REQUIRED" name="text"/>
+                        <property value="create*" name="key"/>
+                    </property-collection>
+                    <property-collection name="@http://www.springframework.org/schema/beans/prop;2">
+                        <property value="PROPAGATION_REQUIRED" name="text"/>
+                        <property value="update*" name="key"/>
+                    </property-collection>
+                </property-collection>
+            </property-collection>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="c02ed0f4-1f77-405e-939a-ff9eba09001d">
+        <properties>
+            <property value="eucDataSource" name="id"/>
+            <property value="org.apache.commons.dbcp.BasicDataSource" name="class"/>
+            <property name="parent"/>
+            <property name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property name="init-method"/>
+            <property value="close" name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                <property value="driverClassName" name="name"/>
+                <property value="com.microsoft.sqlserver.jdbc.SQLServerDriver" name="value"/>
+            </property-collection>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;1">
+                <property value="url" name="name"/>
+                <property value="${msilm.euc.excel.database.datasource.url}" name="value"/>
+            </property-collection>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;2">
+                <property value="username" name="name"/>
+                <property value="${msilm.euc.excel.database.username}" name="value"/>
+            </property-collection>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;3">
+                <property value="password" name="name"/>
+                <property value="${msilm.euc.excel.database.password}" name="value"/>
+            </property-collection>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="962e0c22-b774-48b7-83e0-ebe13f67b9a0">
+        <properties>
+            <property value="eucNodePersistenceHandler" name="id"/>
+            <property value="com.msilm.euc.service.persistence.EucNodePersistenceHandler" name="class"/>
+            <property name="parent"/>
+            <property value="singleton" name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                <property value="dataSource" name="name"/>
+                <property-collection name="@http://www.springframework.org/schema/beans/ref;1">
+                    <property value="eucDataSource" name="local"/>
+                </property-collection>
+            </property-collection>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="39d9fa14-a388-4135-b393-4966776edc3e">
+        <properties>
+            <property value="resetNodeDefLoadConfigs" name="id"/>
+            <property value="com.msilm.euc.mule.startup.ResetLoadConfigs" name="class"/>
+            <property name="parent"/>
+            <property value="singleton" name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property value="init" name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                <property value="fromFolder" name="name"/>
+                <property value="${msilm.euc.nodedef.dir.out}" name="value"/>
+            </property-collection>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;1">
+                <property value="toFolder" name="name"/>
+                <property value="${msilm.euc.nodedef.dir.in}" name="value"/>
+            </property-collection>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="d807c6c6-0175-489e-851d-d39b3c0daa38">
+        <properties>
+            <property value="eucNodeDefProvider" name="id"/>
+            <property value="com.msilm.euc.service.EucNodeDefProvider" name="class"/>
+            <property name="parent"/>
+            <property value="singleton" name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property value="init" name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="34b9018d-0790-4b17-a5b1-aca8ca03bd8a">
+        <properties>
+            <property value="resetExcelInstructionLoadConfigs" name="id"/>
+            <property value="com.msilm.euc.mule.startup.ResetLoadConfigs" name="class"/>
+            <property name="parent"/>
+            <property value="singleton" name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property value="init" name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                <property value="fromFolder" name="name"/>
+                <property value="${msilm.euc.excel.inst.dir.out}" name="value"/>
+            </property-collection>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;1">
+                <property value="toFolder" name="name"/>
+                <property value="${msilm.euc.excel.inst.dir.in}" name="value"/>
+            </property-collection>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="8062d660-c29c-4891-b2f0-2e40231b465b">
+        <properties>
+            <property value="eucExcelInstructionProvider" name="id"/>
+            <property value="com.msilm.euc.service.EucExcelInstructionProvider" name="class"/>
+            <property name="parent"/>
+            <property value="singleton" name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property value="init" name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                <property value="xmlToSheetTransformer" name="name"/>
+                <property-collection name="@http://www.springframework.org/schema/beans/ref;1">
+                    <property value="xmlToSheetTransformer" name="local"/>
+                </property-collection>
+            </property-collection>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="a695bc90-f5e9-4401-9035-fa38bebee982">
+        <properties>
+            <property value="xmlToSheetTransformer" name="id"/>
+            <property value="org.sri.nodeservice.transform.util.XmlToSheetTransformer" name="class"/>
+            <property name="parent"/>
+            <property value="singleton" name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                <property value="validator" name="name"/>
+                <property-collection name="@http://www.springframework.org/schema/beans/ref;1">
+                    <property value="xmlValidator" name="local"/>
+                </property-collection>
+            </property-collection>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="4874c4e9-7d56-4afb-853f-ec43e0a8745e">
+        <properties>
+            <property value="xmlValidator" name="id"/>
+            <property value="org.sri.nodeservice.transform.util.XmlValidator" name="class"/>
+            <property name="parent"/>
+            <property value="singleton" name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property value="init" name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                <property value="xsdClasspath" name="name"/>
+                <property value="xsd/nodeExcelSchema.xsd" name="value"/>
+            </property-collection>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="586ecd31-24bb-400c-a0a7-e90bc1c4f8cf">
+        <properties>
+            <property value="processSpreadsheet" name="id"/>
+            <property value="org.sri.nodeservice.transform.excel.ProcessSpreadsheet" name="class"/>
+            <property name="parent"/>
+            <property value="singleton" name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="9e6540d4-1ddc-4a36-8284-5f05813b3f0d">
+        <properties>
+            <property value="extjsTransformer" name="id"/>
+            <property value="org.sri.nodeservice.transform.extjs.stnd.nodeaccess.ExtJSStndHttpRqToNodeRq" name="class"/>
+            <property name="parent"/>
+            <property name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="ff18109d-1cde-4988-845a-5eac56e5733d">
+        <properties>
+            <property value="nodeRsToExtJSJSON" name="id"/>
+            <property value="org.sri.nodeservice.transform.extjs.stnd.nodeaccess.NodeRsToExtJSJSON" name="class"/>
+            <property name="parent"/>
+            <property name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="6d8fca69-3d04-42b0-b50b-1f163fc42299">
+        <properties>
+            <property value="eucNodeService" name="id"/>
+            <property value="com.msilm.euc.nodeservice.EucNodeService" name="class"/>
+            <property name="parent"/>
+            <property name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                <property value="eucNodeDefProvider" name="ref"/>
+                <property value="eucNodeDefProvider" name="name"/>
+            </property-collection>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;1">
+                <property value="eucExcelInstructionProvider" name="ref"/>
+                <property value="eucExcelInstructionProvider" name="name"/>
+            </property-collection>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;2">
+                <property value="eucNodePersistenceHandler" name="ref"/>
+                <property value="eucNodePersistenceHandler" name="name"/>
+            </property-collection>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="9bbe0d86-54b7-417d-a4c5-169d1699718f">
+        <properties>
+            <property value="eucRsToNodeRs" name="id"/>
+            <property value="com.msilm.euc.nodeservice.transformer.EucRsToNodeRs" name="class"/>
+            <property name="parent"/>
+            <property name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="bd71e9e9-31cc-43d0-8c85-3f18a0c811ce">
+        <properties>
+            <property value="httpMultipartTransformer" name="id"/>
+            <property value="com.msilm.euc.mule.transformer.EucFileToNodeTransformer" name="class"/>
+            <property name="parent"/>
+            <property name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                <property value="eucExcelInstructionProvider" name="ref"/>
+                <property value="eucExcelInstructionProvider" name="name"/>
+            </property-collection>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;1">
+                <property value="processSpreadsheet" name="ref"/>
+                <property value="processSpreadsheet" name="name"/>
+            </property-collection>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="62de40a6-6b11-46c4-b6ff-0f5584b70b1c">
+        <properties>
+            <property value="eucServiceExceptionTransformer" name="id"/>
+            <property value="com.msilm.euc.mule.transformer.EucServiceExceptionTransformer" name="class"/>
+            <property name="parent"/>
+            <property name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="c05be22e-b3bd-43d3-8476-95b909f25a83">
+        <properties>
+            <property value="httpToNodeDefRq" name="id"/>
+            <property value="org.sri.nodeservice.transform.json.nodedef.HttpRqToNodeDefRq" name="class"/>
+            <property name="parent"/>
+            <property name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+        </properties>
+    </global-element>
+    <global-element type="http://www.springframework.org/schema/beans/bean" name="Bean" entity-id="ce3947c7-d3f8-4874-8802-4dc83f04ff94">
+        <properties>
+            <property value="nodeDefRsToJSON" name="id"/>
+            <property value="org.sri.nodeservice.transform.json.nodedef.NodeDefRsToJSON" name="class"/>
+            <property name="parent"/>
+            <property name="scope"/>
+            <property name="abstract"/>
+            <property name="lazy-init"/>
+            <property name="autowire"/>
+            <property name="depends-on"/>
+            <property name="autowire-candidate"/>
+            <property name="primary"/>
+            <property name="init-method"/>
+            <property name="destroy-method"/>
+            <property name="factory-method"/>
+            <property name="factory-bean"/>
+        </properties>
+    </global-element>
+    <global-element type="http://www.mulesoft.org/schema/mule/core/custom-transformer" name="Java" entity-id="f937d566-8ee0-48d0-b8c6-c5d29b738e92">
+        <properties>
+            <property name="returnClass"/>
+            <property name="ignoreBadInput"/>
+            <property name="encoding"/>
+            <property name="mimeType"/>
+            <property value="org.sri.nodeservice.mule.transform.nodeaccess.TransformHttpToNodeRq" name="class"/>
+            <property value="extjsStndToNodeRq" name="name"/>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                <property value="extjsTransformer" name="ref"/>
+                <property value="httpRqToNodeRq" name="name"/>
+            </property-collection>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;1">
+                <property value="httpMultipartTransformer" name="ref"/>
+                <property value="httpMultipartTransformer" name="name"/>
+            </property-collection>
+        </properties>
+    </global-element>
+    <global-element type="http://www.mulesoft.org/schema/mule/core/custom-transformer" name="Java" entity-id="4abd0bb1-7368-4044-933c-621026f8758d">
+        <properties>
+            <property name="returnClass"/>
+            <property name="ignoreBadInput"/>
+            <property name="encoding"/>
+            <property name="mimeType"/>
+            <property value="org.sri.nodeservice.mule.transform.nodeaccess.TransformNodeRsToHttp" name="class"/>
+            <property value="transformerNodeRsToExtJSJSON" name="name"/>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                <property value="nodeRsToExtJSJSON" name="ref"/>
+                <property value="nodeRsToHttpRs" name="name"/>
+            </property-collection>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;1">
+                <property value="eucServiceExceptionTransformer" name="ref"/>
+                <property value="serviceExceptionTransformer" name="name"/>
+            </property-collection>
+        </properties>
+    </global-element>
+    <global-element type="http://www.mulesoft.org/schema/mule/core/custom-transformer" name="Java" entity-id="77fbea87-1296-404f-971b-b8cf3f3e9bc8">
+        <properties>
+            <property name="returnClass"/>
+            <property name="ignoreBadInput"/>
+            <property name="encoding"/>
+            <property name="mimeType"/>
+            <property value="org.sri.nodeservice.mule.transform.nodedef.TransformHttpToNodeDefRq" name="class"/>
+            <property value="transformerHTTPToNodeDefRq" name="name"/>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                <property value="httpToNodeDefRq" name="ref"/>
+                <property value="httpToNodeDefRq" name="name"/>
+            </property-collection>
+        </properties>
+    </global-element>
+    <global-element type="http://www.mulesoft.org/schema/mule/core/custom-transformer" name="Java" entity-id="685a6606-ead1-40c6-9037-26a8522e1016">
+        <properties>
+            <property name="returnClass"/>
+            <property name="ignoreBadInput"/>
+            <property name="encoding"/>
+            <property name="mimeType"/>
+            <property value="org.sri.nodeservice.mule.transform.nodedef.TransformNodeDefRsToHttp" name="class"/>
+            <property value="metadataRsToJSON" name="name"/>
+            <property-collection name="@http://www.springframework.org/schema/beans/property;0">
+                <property value="nodeDefRsToJSON" name="ref"/>
+                <property value="nodeDefRsToStringRs" name="name"/>
+            </property-collection>
+        </properties>
+    </global-element>
+    <global-element type="org.mule.tooling.ui.modules.core.global.fileConnector" name="File" entity-id="ac67e12d-bb2a-45c1-a198-20a88fe7cc05">
+        <properties>
+            <property value="nodeDefFileConnector" name="name"/>
+            <property name="outputPattern"/>
+            <property name="writeToDirectory"/>
+            <property name="readFromDirectory"/>
+            <property name="workDirectory"/>
+            <property name="workFileNamePattern"/>
+            <property value="false" name="autoDelete"/>
+            <property name="outputAppend"/>
+            <property name="streaming"/>
+            <property name="recursive"/>
+            <property name="dispatcherPoolFactory-ref"/>
+            <property name="dynamicNotification"/>
+            <property name="validateConnections"/>
+            <property name="serialiseObjects"/>
+            <property value="${msilm.euc.nodedef.polling.frequency}" name="pollingFrequency"/>
+            <property name="fileAge"/>
+            <property name="moveToPattern"/>
+            <property name="moveToDirectory"/>
+            <property name="comparator"/>
+            <property name="reverseOrder"/>
+        </properties>
+    </global-element>
+    <global-element type="org.mule.tooling.ui.modules.core.global.fileConnector" name="File" entity-id="ccde3db0-970a-4788-b75a-237fe5a1932d">
+        <properties>
+            <property value="xmlInstFileConnector" name="name"/>
+            <property name="outputPattern"/>
+            <property name="writeToDirectory"/>
+            <property name="readFromDirectory"/>
+            <property name="workDirectory"/>
+            <property name="workFileNamePattern"/>
+            <property value="false" name="autoDelete"/>
+            <property name="outputAppend"/>
+            <property name="streaming"/>
+            <property name="recursive"/>
+            <property name="dispatcherPoolFactory-ref"/>
+            <property name="dynamicNotification"/>
+            <property name="validateConnections"/>
+            <property name="serialiseObjects"/>
+            <property value="${msilm.euc.excel.polling.frequency}" name="pollingFrequency"/>
+            <property name="fileAge"/>
+            <property value="#[header:originalFilename]" name="moveToPattern"/>
+            <property value="${msilm.euc.excel.inst.dir.out}" name="moveToDirectory"/>
+            <property name="comparator"/>
+            <property name="reverseOrder"/>
+        </properties>
+    </global-element>
+    <flow SubFlow="false" name="loadNodeDefConfigs">
+        <properties>
+            <property name="processingStrategy2"/>
+            <property name="processingStrategy"/>
+        </properties>
+        <lane entity-id="61fa56bb-8bfe-42eb-98e6-91a6d4e3cb39">
+            <endpoint message-exchange-pattern="OneWay" direction="Inbound" type="http://www.mulesoft.org/schema/mule/file/endpoint" name="File" entity-id="1d655ecb-5f61-4863-8a25-b5dcf487df07">
+                <properties>
+                    <property value="one-way" name="exchange-pattern"/>
+                    <property value="${msilm.euc.nodedef.dir.in}" name="path"/>
+                    <property name="outputPattern"/>
+                    <property value="#[header:originalFilename]" name="moveToPattern"/>
+                    <property value="${msilm.euc.nodedef.dir.out}" name="moveToDirectory"/>
+                    <property name="pollingFrequency"/>
+                    <property name="fileAge"/>
+                    <property name="address"/>
+                    <property name="responseTimeout"/>
+                    <property name="encoding"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="mimeType"/>
+                    <property name="comparator"/>
+                    <property name="reverseOrder"/>
+                    <property value="nodeDefFileConnector" name="connector-ref"/>
+                    <property name="ref"/>
+                    <property name="transformer-refs"/>
+                    <property name="responseTransformer-refs"/>
+                </properties>
+            </endpoint>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/component" name="Java" entity-id="2e50e8d4-6f65-4778-8ac4-8c2a8e537f62">
+                <properties>
+                    <property name="class"/>
+                    <property-collection name="@http://www.mulesoft.org/schema/mule/core/spring-object;0">
+                        <property value="eucNodeDefProvider" name="bean"/>
+                    </property-collection>
+                </properties>
+            </pattern>
+        </lane>
+    </flow>
+    <flow SubFlow="false" name="loadExcelInstConfigs">
+        <properties>
+            <property name="processingStrategy2"/>
+            <property name="processingStrategy"/>
+        </properties>
+        <lane entity-id="6d3d8883-c4e2-468c-8b06-d1c25547b171">
+            <endpoint message-exchange-pattern="OneWay" direction="Inbound" type="http://www.mulesoft.org/schema/mule/file/endpoint" name="File" entity-id="28f9001e-c56b-4702-b021-edb1cc912107">
+                <properties>
+                    <property value="one-way" name="exchange-pattern"/>
+                    <property value="${msilm.euc.excel.inst.dir.in}" name="path"/>
+                    <property name="outputPattern"/>
+                    <property name="moveToPattern"/>
+                    <property name="moveToDirectory"/>
+                    <property name="pollingFrequency"/>
+                    <property name="fileAge"/>
+                    <property name="address"/>
+                    <property name="responseTimeout"/>
+                    <property name="encoding"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="mimeType"/>
+                    <property name="comparator"/>
+                    <property name="reverseOrder"/>
+                    <property value="xmlInstFileConnector" name="connector-ref"/>
+                    <property name="ref"/>
+                    <property name="transformer-refs"/>
+                    <property name="responseTransformer-refs"/>
+                </properties>
+            </endpoint>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/component" name="Java" entity-id="fcf86109-9aa0-4a99-a4a1-ef20278e8024">
+                <properties>
+                    <property name="class"/>
+                    <property-collection name="@http://www.mulesoft.org/schema/mule/core/spring-object;0">
+                        <property value="eucExcelInstructionProvider" name="bean"/>
+                    </property-collection>
+                </properties>
+            </pattern>
+        </lane>
+    </flow>
+    <flow SubFlow="false" name="uploadExcelFileNodeService">
+        <properties>
+            <property name="processingStrategy2"/>
+            <property name="processingStrategy"/>
+        </properties>
+        <lane entity-id="d30b91fc-2f16-4b11-b543-63ad5a28ea34">
+            <endpoint message-exchange-pattern="OneWay" direction="Inbound" type="http://www.mulesoft.org/schema/mule/http/endpoint" name="HTTP" entity-id="df0cb980-4fde-47f2-81ff-37c99df20718">
+                <properties>
+                    <property value="one-way" name="exchange-pattern"/>
+                    <property value="request-response" name="exchange-pattern"/>
+                    <property value="http://www.mulesoft.org/schema/mule/http/endpoint" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property name="httpLabel"/>
+                    <property name="host"/>
+                    <property name="port"/>
+                    <property name="path"/>
+                    <property name="method"/>
+                    <property value="http://${msilm.euc.excel.http.endpoint.host}:${msilm.euc.excel.node.http.endpoint.port}/euc/json" name="address"/>
+                    <property name="encoding"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="mimeType"/>
+                    <property name="responseTimeout"/>
+                    <property name="followRedirects"/>
+                    <property name="connector-ref"/>
+                    <property name="ref"/>
+                    <property name="transformer-refs"/>
+                    <property name="responseTransformer-refs"/>
+                    <property name="user"/>
+                    <property name="password"/>
+                    <property name="contentType"/>
+                    <property name="keep-alive"/>
+                </properties>
+            </endpoint>
+            <unknown entity-id="6585adf5-984f-4d3b-bce2-d17c76e524fc">
+                <content>&lt;mule-ss:http-security-filter xmlns:mule-ss=&quot;http://www.mulesoft.org/schema/mule/spring-security&quot; realm=&quot;mule-realm&quot; securityProviders=&quot;memory-provider&quot;/&gt;</content>
+            </unknown>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/transformer" name="ExtJS Standard to Node Request" entity-id="a0193a8a-8a03-4e60-8ea2-83031b52556e">
+                <properties>
+                    <property value="extjsStndToNodeRq" name="ref"/>
+                </properties>
+            </pattern>
+            <response entity-id="23acc998-6134-44da-8f8f-4fce45bfabb0">
+                <compartment entity-id="db7fb387-b039-4d51-ad9d-c22bb6b018f6">
+                    <lane entity-id="8fed35b6-aa05-4a07-8194-a51d31e25265">
+                        <pattern type="http://www.mulesoft.org/schema/mule/core/message-properties-transformer" name="Message Properties" entity-id="abc7bad2-99da-4147-a624-b8894b2df748">
+                            <properties>
+<property name="returnClass"/>
+<property name="ignoreBadInput"/>
+<property name="encoding"/>
+<property name="mimeType"/>
+<property name="overwrite"/>
+<property name="scope"/>
+<property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
+    <property value="text/html" name="value"/>
+    <property value="Content-Type" name="key"/>
+</property-collection>
+                            </properties>
+                        </pattern>
+                        <pattern type="http://www.mulesoft.org/schema/mule/core/transformer" name="Transformer Reference" entity-id="7a42ecbe-485e-47ec-bb21-e0a9bc4a58d6">
+                            <properties>
+<property value="transformerNodeRsToExtJSJSON" name="ref"/>
+                            </properties>
+                        </pattern>
+                    </lane>
+                </compartment>
+            </response>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/component" name="EUC Node Service" entity-id="fa65aeb7-c479-435e-bc8c-92a6ce9091d4">
+                <properties>
+                    <property name="class"/>
+                    <property-collection name="@http://www.mulesoft.org/schema/mule/core/spring-object;0">
+                        <property value="eucNodeService" name="bean"/>
+                    </property-collection>
+                </properties>
+            </pattern>
+        </lane>
+    </flow>
+    <flow SubFlow="false" name="UploadExcelFileNodeMetaDataService">
+        <properties>
+            <property name="processingStrategy2"/>
+            <property name="processingStrategy"/>
+        </properties>
+        <lane entity-id="a8a7f7b2-33cb-44d1-90c8-cf0931a75e57">
+            <endpoint message-exchange-pattern="OneWay" direction="Inbound" type="http://www.mulesoft.org/schema/mule/http/endpoint" name="HTTP" entity-id="2d6cfb97-4269-4895-8e3c-60025117f1f7">
+                <properties>
+                    <property value="one-way" name="exchange-pattern"/>
+                    <property value="request-response" name="exchange-pattern"/>
+                    <property value="http://www.mulesoft.org/schema/mule/http/endpoint" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property name="httpLabel"/>
+                    <property name="host"/>
+                    <property name="port"/>
+                    <property name="path"/>
+                    <property name="method"/>
+                    <property value="http://${msilm.euc.excel.http.endpoint.host}:${msilm.euc.excel.nodedef.http.endpoint.port}/euc/json" name="address"/>
+                    <property name="encoding"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="mimeType"/>
+                    <property name="responseTimeout"/>
+                    <property name="followRedirects"/>
+                    <property name="connector-ref"/>
+                    <property name="ref"/>
+                    <property name="transformer-refs"/>
+                    <property name="responseTransformer-refs"/>
+                    <property name="user"/>
+                    <property name="password"/>
+                    <property name="contentType"/>
+                    <property name="keep-alive"/>
+                </properties>
+            </endpoint>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/transformer" name="Transform HTTP request to NodeDef Rq" entity-id="80f84232-9c0b-4747-8167-40b269bef955">
+                <properties>
+                    <property value="transformerHTTPToNodeDefRq" name="ref"/>
+                </properties>
+            </pattern>
+            <response entity-id="32204aca-361e-44cc-bdc4-020822adae7b">
+                <compartment entity-id="7d2dcc39-acd2-4244-83a9-a3e32734b368">
+                    <lane entity-id="8e19a6fe-a75b-43ff-a96e-7ae94482d335">
+                        <pattern type="http://www.mulesoft.org/schema/mule/core/message-properties-transformer" name="Message Properties" entity-id="866fb73a-7e46-4606-bdb8-0cd4b83607d2">
+                            <properties>
+<property name="returnClass"/>
+<property name="ignoreBadInput"/>
+<property name="encoding"/>
+<property name="mimeType"/>
+<property name="overwrite"/>
+<property name="scope"/>
+<property-collection name="@http://www.mulesoft.org/schema/mule/core/add-message-property;0">
+    <property value="text/html" name="value"/>
+    <property value="Content-Type" name="key"/>
+</property-collection>
+                            </properties>
+                        </pattern>
+                        <pattern type="http://www.mulesoft.org/schema/mule/core/transformer" name="Transformer Reference" entity-id="c77571eb-5a5f-435d-8937-36840f2d8965">
+                            <properties>
+<property value="metadataRsToJSON" name="ref"/>
+                            </properties>
+                        </pattern>
+                    </lane>
+                </compartment>
+            </response>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/component" name="EUC Node Service" entity-id="90240e9a-73af-494e-adc0-f7e082b78b75">
+                <properties>
+                    <property name="class"/>
+                    <property-collection name="@http://www.mulesoft.org/schema/mule/core/spring-object;0">
+                        <property value="eucNodeService" name="bean"/>
+                    </property-collection>
+                </properties>
+            </pattern>
+        </lane>
+    </flow>
+    <description></description>
+</mule-configuration>

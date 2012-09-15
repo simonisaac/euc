@@ -1,0 +1,42 @@
+<assembly>
+	<id>distribution</id>
+	<formats>
+		<format>zip</format>
+		<format>dir</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>../euc.mule/src/main/resources</directory>
+			<outputDirectory>${muleDistributionDir}</outputDirectory>
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory>${muleDistributionDir}</outputDirectory>
+			<includes>
+				<include>org.sri.nodeservice:nodeservice.core</include>
+				<include>org.sri.nodeservice:nodeservice.core.nodemgr</include>
+				<include>org.sri.nodeservice:nodeservice.transform.excel</include>
+				<include>org.sri.nodeservice:nodeservice.transform.extjs</include>
+				<include>org.sri.nodeservice:nodeservice.transform.json</include>
+				<include>org.sri.nodeservice:nodeservice.transform.common</include>
+				<include>org.sri.nodeservice:nodeservice.mule</include>
+				
+				<include>com.msilm.euc:euc.service</include>
+				<include>com.msilm.euc:euc.nodeservice</include>
+				<include>com.msilm.euc:euc.mule</include>
+				
+				<include>net.sf.jxls:jxls-core</include>
+				<include>org.apache.poi:poi</include>
+				<include>net.sf.flexjson:flexjson</include>
+				<include>commons-dbcp:commons-dbcp</include>
+				<include>jdbc:sqljdbc4</include>
+			</includes>
+		</dependencySet>
+	</dependencySets>
+</assembly>

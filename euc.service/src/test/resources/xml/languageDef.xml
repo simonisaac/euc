@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:languageDef
+	xmlns:p="http://model.service.nodedef.core.nodeservice.sri.org"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://model.service.nodedef.core.nodeservice.sri.org languageDef.xsd ">
+	
+	<p:description>Simple Node Def Load</p:description>
+	
+	<p:nodeDef>
+		<p:id>simpleNodeDef</p:id>
+		
+		<p:attributes>
+			<p:id>string</p:id>
+			<p:attrDef>
+				<p:id>string</p:id>
+				<p:typeId>STRING</p:typeId>
+				<p:label>A String</p:label>
+				<p:defaultValue>A String Value</p:defaultValue>
+				<p:mandatory>true</p:mandatory>
+				<p:readonly>false</p:readonly>
+			</p:attrDef>
+		</p:attributes>
+		<p:attributes>
+			<p:id>stringMin10</p:id>
+			<p:attrDef>
+				<p:id>stringMin10</p:id>
+				<p:typeId>STRING</p:typeId>
+				<p:label>A String Min 10</p:label>
+				<p:defaultValue>0123456789</p:defaultValue>
+				<p:mandatory>false</p:mandatory>
+				<p:readonly>false</p:readonly>
+				<p:constraints>
+					<p:id>MIN_LENGTH</p:id>					
+					<p:parameterList>
+						<p:name>minLength</p:name>
+						<p:value>10</p:value>
+					</p:parameterList>
+				</p:constraints>
+			</p:attrDef>
+		</p:attributes>
+		<p:attributes>
+			<p:id>stringMax20</p:id>
+			<p:attrDef>
+				<p:id>stringMax20</p:id>
+				<p:typeId>STRING</p:typeId>
+				<p:label>A String Max 20</p:label>
+				<p:defaultValue>01234567890123456789</p:defaultValue>
+				<p:mandatory>false</p:mandatory>
+				<p:readonly>false</p:readonly>
+				<p:constraints>
+					<p:id>MAX_LENGTH</p:id>					
+					<p:parameterList>
+						<p:name>maxLength</p:name>
+						<p:value>20</p:value>
+					</p:parameterList>
+				</p:constraints>
+			</p:attrDef>
+		</p:attributes>
+		<p:attributes>
+			<p:id>stringExMin5Max10</p:id>
+			<p:attrDef>
+				<p:id>stringExMin5Max10</p:id>
+				<p:typeId>STRING_TYPE_MIN_5</p:typeId>
+				<p:label>A String Min5 Max10</p:label>
+				<p:defaultValue>012345678</p:defaultValue>
+				<p:mandatory>false</p:mandatory>
+				<p:readonly>false</p:readonly>
+				<p:constraints>
+					<p:id>MAX_LENGTH</p:id>					
+					<p:parameterList>
+						<p:name>maxLength</p:name>
+						<p:value>10</p:value>
+					</p:parameterList>
+				</p:constraints>
+			</p:attrDef>
+		</p:attributes>
+		<p:attributes>
+			<p:id>long</p:id>
+			<p:attrDef>
+				<p:id>long</p:id>
+				<p:typeId>LONG</p:typeId>
+				<p:label>A Long</p:label>
+				<p:defaultValue>1</p:defaultValue>
+				<p:mandatory>false</p:mandatory>
+				<p:readonly>false</p:readonly>
+			</p:attrDef>
+		</p:attributes>
+		
+	</p:nodeDef>
+	
+	<p:typeExDef>
+		<p:id>STRING_TYPE_MIN_5</p:id>
+		<p:parentId>STRING</p:parentId>
+		<p:constraints>
+			<p:id>MIN_LENGTH</p:id>
+			<p:parameterList>
+				<p:name>minLength</p:name>
+				<p:value>5</p:value>
+			</p:parameterList>
+		</p:constraints>
+	</p:typeExDef>
+	
+</p:languageDef>

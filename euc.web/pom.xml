@@ -1,0 +1,86 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>euc</artifactId>
+		<groupId>com.msilm.euc</groupId>
+		<version>1.0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>com.msilm.euc</groupId>
+	<artifactId>euc.web</artifactId>
+	<version>1.0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging> <!-- change to war for deployment-->
+	<name>EUC Web Extension</name>
+	<dependencies>
+		<dependency>
+			<groupId>org.sri.nodeservice</groupId>
+			<artifactId>nodeservice.core</artifactId>
+			<version>${nodeservice.version}</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.sri.nodeservice</groupId>
+			<artifactId>nodeservice.core.nodemgr</artifactId>
+			<version>${nodeservice.version}</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.sri.nodeservice</groupId>
+			<artifactId>nodeservice.web</artifactId>
+			<version>${nodeservice.version}</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<type>jar</type>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+        	<groupId>org.springframework.security</groupId>
+        	<artifactId>spring-security-core</artifactId>
+        	<version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.springframework.security</groupId>
+        	<artifactId>spring-security-config</artifactId>
+        	<version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.springframework</groupId>
+        	<artifactId>spring-web</artifactId>
+        	<version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+		    <groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
+		</dependency>
+        
+        <dependency>
+		    <groupId>jstl</groupId>
+		    <artifactId>jstl</artifactId>
+		    <version>${jstl.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.flexjson</groupId>
+			<artifactId>flexjson</artifactId>
+			<version>${flexjson.version}</version>
+		</dependency>
+        
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+			    <artifactId>tomcat-maven-plugin</artifactId>
+			    <version>${tomcat-maven-plugin.version}</version>
+			</plugin>
+		</plugins>
+	</build>
+</project>

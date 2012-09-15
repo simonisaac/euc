@@ -1,0 +1,30 @@
+<html version="-//W3C//DTD HTML 4.01 Transitional//EN">
+<title>Excel File Upload</title>
+<body>
+<br>
+<br>
+<br>
+<table align="center">
+	<tr>
+		<td>
+		<form method="post" action="http://localhost:3333/euc/json" name="submit"
+			enctype="multipart/form-data" method="post">
+			
+			<input type="file" name="fileToUpload"><br><br>
+			<input type="submit" name="submit" value="submit"><br>
+	
+			<!-- input type="hidden" name="id" value="nodeId1123"><br -->
+			<input type="hidden" name="nodeType" value="testExcel"><br>
+			<input type="hidden" name="excelInstId" value="testExcel"><br>
+	
+			<input type="hidden" name="payload" value="dummy"><br>
+			<input type="hidden" name="method" value="create"><br>
+	
+			<input type="hidden" name="sessionToken" value="sessionId:11123"><br>			
+		</form>
+		</td>
+	</tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule 
+xmlns="http://www.mulesoft.org/schema/mule/core" 
+xmlns:http="http://www.mulesoft.org/schema/mule/http" 
+xmlns:file="http://www.mulesoft.org/schema/mule/file" 
+xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+xmlns:spring="http://www.springframework.org/schema/beans" 
+xmlns:core="http://www.mulesoft.org/schema/mule/core" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns:context="http://www.springframework.org/schema/context" 
+xmlns:smtp="http://www.mulesoft.org/schema/mule/smtp" 
+xmlns:email="http://www.mulesoft.org/schema/mule/email" 
+xmlns:aop="http://www.springframework.org/schema/aop" 
+xmlns:xm="http://www.mulesoft.org/schema/mule/xml"
+xmlns:mule-ss="http://www.mulesoft.org/schema/mule/spring-security" 
+xmlns:ss="http://www.springframework.org/schema/security" 
+
+version="CE-3.2.1"
+
+xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd 
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd 
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd 
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+http://www.mulesoft.org/schema/mule/smtp http://www.mulesoft.org/schema/mule/smtp/3.1/mule-smtp.xsd 
+http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/3.1/mule-email.xsd 
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd 
+http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/3.1/mule-xml.xsd 
+http://www.mulesoft.org/schema/mule/spring-security http://www.mulesoft.org/schema/mule/spring-security/3.1/mule-spring-security.xsd 
+http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd ">
+    <context:property-placeholder location="euc.properties"></context:property-placeholder>
+    <mule-ss:security-manager name="_muleSecurityManager">  
+        <mule-ss:delegate-security-provider name="memory-provider" delegate-ref="authenticationManager"/> 
+    </mule-ss:security-manager>
+    <spring:beans>
+        <ss:authentication-manager alias="authenticationManager">  
+            <ss:authentication-provider> 
+                <ss:user-service id="userService" properties="classpath:users.properties"/> 
+            </ss:authentication-provider> 
+        </ss:authentication-manager>
+        <spring:bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased" doc:name="Bean">
+            <spring:property name="decisionVoters">
+                <spring:list>
+                    <spring:ref bean="roleVoter"/>
+                </spring:list>
+            </spring:property>
+        </spring:bean>
+        <spring:bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter" doc:name="Bean"/>
+        <spring:bean id="autoProxyCreator" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator" doc:name="Bean">
+            <spring:property name="interceptorNames">
+                <spring:list>
+                    <spring:value>eucComponentSecurity</spring:value>
+                    <spring:value>eucNodeServiceTransactionInterceptor</spring:value>
+                    <spring:value>concurrentCheckAdvisor</spring:value>
+                </spring:list>
+            </spring:property>
+            <spring:property name="beanNames">
+                <spring:list>
+                    <spring:value>eucNodeService</spring:value>
+                </spring:list>
+            </spring:property>
+            <spring:property name="proxyTargetClass" value="true"/>
+        </spring:bean>
+        <spring:bean id="eucComponentSecurity" class="org.springframework.security.access.intercept.aopalliance.MethodSecurityInterceptor" doc:name="Bean">
+            <spring:property name="authenticationManager" ref="authenticationManager"/>
+            <spring:property name="accessDecisionManager" ref="accessDecisionManager"/>
+            <spring:property name="securityMetadataSource">
+                <spring:value>com.msilm.euc.nodeservice.EucNodeService.getNode=ROLE_EUC_USER com.msilm.euc.nodeservice.EucNodeService.retrieveNodes=ROLE_EUC_USER com.msilm.euc.nodeservice.EucNodeService.createNode=ROLE_ADMIN com.msilm.euc.nodeservice.EucNodeService.updateNode=ROLE_ADMIN</spring:value>
+            </spring:property>
+        </spring:bean>
+        <spring:bean id="concurrentCheckInterceptor" class="com.msilm.euc.nodeservice.interceptor.ConcurrentCheckInterceptor" doc:name="Bean">
+            <spring:property name="eucNodePersistenceHandler" ref="eucNodePersistenceHandler"/>
+        </spring:bean>
+        <spring:bean id="concurrentCheckAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor" doc:name="Bean">
+            <spring:property name="advice" ref="concurrentCheckInterceptor"/>
+            <spring:property name="patterns">
+                <spring:list>
+                    <spring:value>com.msilm.euc.nodeservice.EucNodeService.updateNode</spring:value>
+                </spring:list>
+            </spring:property>
+        </spring:bean>
+        <spring:bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" doc:name="Bean">
+            <spring:property name="dataSource" ref="eucDataSource"/>
+        </spring:bean>
+        <spring:bean id="eucNodeServiceTransactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor" doc:name="Bean">
+            <spring:property name="transactionManager" ref="txManager"/>
+            <spring:property name="transactionAttributes">
+                <spring:props>
+                    <spring:prop key="create*">PROPAGATION_REQUIRED</spring:prop>
+                    <spring:prop key="update*">PROPAGATION_REQUIRED</spring:prop>
+                    <spring:prop key="get*">PROPAGATION_SUPPORTS</spring:prop>
+                    <spring:prop key="retrieve*">PROPAGATION_SUPPORTS</spring:prop>
+                </spring:props>
+            </spring:property>
+        </spring:bean>
+        <spring:bean id="eucDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" doc:name="Bean">
+            <spring:property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+            <spring:property name="url" value="${msilm.euc.excel.database.datasource.url}"/>
+            <spring:property name="username" value="${msilm.euc.excel.database.username}"/>
+            <spring:property name="password" value="${msilm.euc.excel.database.password}"/>
+        </spring:bean>
+        <spring:bean id="eucNodePersistenceHandler" class="com.msilm.euc.service.persistence.EucNodePersistenceHandler" scope="singleton" doc:name="Bean">
+            <spring:property name="dataSource">
+                <spring:ref local="eucDataSource"/>
+            </spring:property>
+        </spring:bean>
+        <spring:bean id="resetNodeDefLoadConfigs" class="com.msilm.euc.mule.startup.ResetLoadConfigs" scope="singleton" init-method="init" doc:name="Bean">
+            <spring:property name="fromFolder" value="${msilm.euc.nodedef.dir.out}"/>
+            <spring:property name="toFolder" value="${msilm.euc.nodedef.dir.in}"/>
+        </spring:bean>
+        <spring:bean id="eucNodeDefProvider" class="com.msilm.euc.service.EucNodeDefProvider" scope="singleton" init-method="init" doc:name="Bean"/>
+        <spring:bean id="resetExcelInstructionLoadConfigs" class="com.msilm.euc.mule.startup.ResetLoadConfigs" scope="singleton" init-method="init" doc:name="Bean">
+            <spring:property name="fromFolder" value="${msilm.euc.excel.inst.dir.out}"/>
+            <spring:property name="toFolder" value="${msilm.euc.excel.inst.dir.in}"/>
+        </spring:bean>
+        <spring:bean id="eucExcelInstructionProvider" class="com.msilm.euc.service.EucExcelInstructionProvider" scope="singleton" init-method="init" doc:name="Bean">
+            <spring:property name="xmlToSheetTransformer">
+                <spring:ref local="xmlToSheetTransformer"/>
+            </spring:property>
+        </spring:bean>
+        <spring:bean id="xmlToSheetTransformer" class="org.sri.nodeservice.transform.util.XmlToSheetTransformer" scope="singleton" doc:name="Bean">
+            <spring:property name="validator">
+                <spring:ref local="xmlValidator"/>
+            </spring:property>
+        </spring:bean>
+        <spring:bean id="xmlValidator" class="org.sri.nodeservice.transform.util.XmlValidator" scope="singleton" init-method="init" doc:name="Bean">
+            <spring:property name="xsdClasspath" value="xsd/nodeExcelSchema.xsd"/>
+        </spring:bean>
+        <spring:bean id="processSpreadsheet" class="org.sri.nodeservice.transform.excel.ProcessSpreadsheet" scope="singleton" doc:name="Bean"/>
+        <spring:bean id="extjsTransformer" class="org.sri.nodeservice.transform.extjs.stnd.nodeaccess.ExtJSStndHttpRqToNodeRq" doc:name="Bean"/>
+        <spring:bean id="nodeRsToExtJSJSON" class="org.sri.nodeservice.transform.extjs.stnd.nodeaccess.NodeRsToExtJSJSON" doc:name="Bean"/>
+        <spring:bean id="eucNodeService" class="com.msilm.euc.nodeservice.EucNodeService" doc:name="Bean">
+            <spring:property name="eucNodeDefProvider" ref="eucNodeDefProvider"/>
+            <spring:property name="eucExcelInstructionProvider" ref="eucExcelInstructionProvider"/>
+            <spring:property name="eucNodePersistenceHandler" ref="eucNodePersistenceHandler"/>
+        </spring:bean>
+        <spring:bean id="eucRsToNodeRs" class="com.msilm.euc.nodeservice.transformer.EucRsToNodeRs" doc:name="Bean"/>
+        <spring:bean id="httpMultipartTransformer" class="com.msilm.euc.mule.transformer.EucFileToNodeTransformer" doc:name="Bean">
+            <spring:property name="eucExcelInstructionProvider" ref="eucExcelInstructionProvider"/>
+            <spring:property name="processSpreadsheet" ref="processSpreadsheet"/>
+        </spring:bean>
+        <spring:bean id="eucServiceExceptionTransformer" class="com.msilm.euc.mule.transformer.EucServiceExceptionTransformer" doc:name="Bean"/>
+        <spring:bean id="httpToNodeDefRq" class="org.sri.nodeservice.transform.json.nodedef.HttpRqToNodeDefRq" doc:name="Bean"/>
+        <spring:bean id="nodeDefRsToJSON" class="org.sri.nodeservice.transform.json.nodedef.NodeDefRsToJSON" doc:name="Bean"/>
+    </spring:beans>
+    <custom-transformer class="org.sri.nodeservice.mule.transform.nodeaccess.TransformHttpToNodeRq" name="extjsStndToNodeRq" doc:name="Java">
+        <spring:property name="httpRqToNodeRq" ref="extjsTransformer"/>
+        <spring:property name="httpMultipartTransformer" ref="httpMultipartTransformer"/>
+    </custom-transformer>
+    <custom-transformer class="org.sri.nodeservice.mule.transform.nodeaccess.TransformNodeRsToHttp" name="transformerNodeRsToExtJSJSON" doc:name="Java">
+        <spring:property name="nodeRsToHttpRs" ref="nodeRsToExtJSJSON"/>
+        <spring:property name="serviceExceptionTransformer" ref="eucServiceExceptionTransformer"/>
+    </custom-transformer>
+    <custom-transformer class="org.sri.nodeservice.mule.transform.nodedef.TransformHttpToNodeDefRq" name="transformerHTTPToNodeDefRq" doc:name="Java">
+        <spring:property name="httpToNodeDefRq" ref="httpToNodeDefRq"/>
+    </custom-transformer>
+    <custom-transformer class="org.sri.nodeservice.mule.transform.nodedef.TransformNodeDefRsToHttp" name="metadataRsToJSON" doc:name="Java">
+        <spring:property name="nodeDefRsToStringRs" ref="nodeDefRsToJSON"/>
+    </custom-transformer>
+    <file:connector name="nodeDefFileConnector" autoDelete="false" pollingFrequency="${msilm.euc.nodedef.polling.frequency}" doc:name="File"/>
+    <file:connector name="xmlInstFileConnector" autoDelete="false" pollingFrequency="${msilm.euc.excel.polling.frequency}" moveToPattern="#[header:originalFilename]" moveToDirectory="${msilm.euc.excel.inst.dir.out}" doc:name="File"/>
+    <flow name="loadNodeDefConfigs" doc:name="loadNodeDefConfigs">
+        <file:inbound-endpoint path="${msilm.euc.nodedef.dir.in}" moveToPattern="#[header:originalFilename]" moveToDirectory="${msilm.euc.nodedef.dir.out}" connector-ref="nodeDefFileConnector" doc:name="File">
+            <!-- Process Only .xml files -->
+            <file:filename-wildcard-filter pattern="*.xml"/>
+        </file:inbound-endpoint>
+        <component doc:name="Java">
+            <spring-object bean="eucNodeDefProvider"/>
+        </component>
+    </flow>
+    <flow name="loadExcelInstConfigs" doc:name="loadExcelInstConfigs">
+        <file:inbound-endpoint path="${msilm.euc.excel.inst.dir.in}" connector-ref="xmlInstFileConnector" doc:name="File">
+            <!-- Process Only .xml files -->
+            <file:filename-wildcard-filter pattern="*.xml"/>
+        </file:inbound-endpoint>
+        <component doc:name="Java">
+            <spring-object bean="eucExcelInstructionProvider"/>
+        </component>
+    </flow>
+    <flow name="uploadExcelFileNodeService" doc:name="uploadExcelFileNodeService">
+        <http:inbound-endpoint exchange-pattern="request-response" address="http://${msilm.euc.excel.http.endpoint.host}:${msilm.euc.excel.node.http.endpoint.port}/euc/json" doc:name="HTTP"/>
+        <mule-ss:http-security-filter realm="mule-realm" securityProviders="memory-provider"></mule-ss:http-security-filter>
+        <transformer ref="extjsStndToNodeRq" doc:name="ExtJS Standard to Node Request"/>
+        <response>
+            <message-properties-transformer doc:name="Message Properties">
+                <add-message-property key="Content-Type" value="text/html"/>
+            </message-properties-transformer>
+            <transformer ref="transformerNodeRsToExtJSJSON" doc:name="Transformer Reference"/>
+        </response>
+        <component doc:name="EUC Node Service">
+            <spring-object bean="eucNodeService"/>
+        </component>
+    </flow>
+    <flow name="UploadExcelFileNodeMetaDataService" doc:name="UploadExcelFileNodeMetaDataService">
+        <http:inbound-endpoint exchange-pattern="request-response" address="http://${msilm.euc.excel.http.endpoint.host}:${msilm.euc.excel.nodedef.http.endpoint.port}/euc/json" doc:name="HTTP"/>
+        <transformer ref="transformerHTTPToNodeDefRq" doc:name="Transform HTTP request to NodeDef Rq"/>
+        <response>
+            <message-properties-transformer doc:name="Message Properties">
+                <add-message-property key="Content-Type" value="text/html"/>
+            </message-properties-transformer>
+            <transformer ref="metadataRsToJSON" doc:name="Transformer Reference"/>
+        </response>
+        <component doc:name="EUC Node Service">
+            <spring-object bean="eucNodeService"/>
+        </component>
+    </flow>
+</mule>

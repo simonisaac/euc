@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:map="http://excel.transform.nodeservice.sri.org" targetNamespace="http://excel.transform.nodeservice.sri.org"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<xs:element name="sheetDefinition" type="map:Sheet" />
+
+	<xs:complexType name="Sheet">
+		<xs:sequence>
+			<xs:element type="xs:string" name="sheetName"/>
+			<xs:element type="xs:string" name="sheetId"/>
+			<xs:element type="xs:string" name="sheetRootNodeType"/>
+			<xs:element type="xs:string" name="sheetNodeType"/>
+			<xs:element type="xs:string" name="sheetDescription"/>
+			<xs:element type="xs:int" name="startRow" /> <!-- 0 = First Row -->
+			<xs:element type="xs:int" name="endRow" minOccurs="0"/>
+			<xs:element type="map:ColumnType" name="column" maxOccurs="unbounded" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ColumnType">
+		<xs:sequence>
+			<xs:element type="xs:int" name="columnIndex"/> <!-- 0 = First Row -->			
+			<xs:element type="xs:string" name="columnName" />
+			<xs:element type="xs:boolean" name="dateType" minOccurs="0"/>
+			<xs:element type="xs:boolean" name="timeType" minOccurs="0"/>			
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

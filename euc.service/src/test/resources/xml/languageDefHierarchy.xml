@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:languageDef
+	xmlns:p="http://model.service.nodedef.core.nodeservice.sri.org"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://model.service.nodedef.core.nodeservice.sri.org languageDef.xsd ">
+
+	<p:description>Hierarchy Node Def Load</p:description>
+	
+	<p:nodeDef>
+		<p:id>childnode</p:id>
+		<p:attributes>
+			<p:id>string</p:id>
+			<p:attrDef>
+				<p:id>string</p:id>
+				<p:typeId>STRING</p:typeId>
+				<p:label>A String</p:label>
+				<p:defaultValue>A String Value</p:defaultValue>
+				<p:mandatory>false</p:mandatory>
+				<p:readonly>false</p:readonly>
+			</p:attrDef>
+		</p:attributes>
+	</p:nodeDef>
+
+	<p:nodeDef>
+		<p:id>simpleHierachyDef</p:id>
+		<p:attributes>
+			<p:id>string</p:id>
+			<p:attrDef>
+				<p:id>string</p:id>
+				<p:typeId>STRING</p:typeId>
+				<p:label>A String</p:label>
+				<p:defaultValue>A String Value</p:defaultValue>
+				<p:mandatory>false</p:mandatory>
+				<p:readonly>false</p:readonly>
+			</p:attrDef>
+		</p:attributes>
+
+		<p:childSetDefs>
+			<p:id>childnodes</p:id>
+			<p:nodeSetDef>
+				<p:id>childnodes</p:id>
+				<p:nodeType>childnode</p:nodeType>
+				<p:minOccurances>5</p:minOccurances>
+				<p:maxOccurances>2</p:maxOccurances>
+			</p:nodeSetDef>
+		</p:childSetDefs>
+	</p:nodeDef>
+
+</p:languageDef>

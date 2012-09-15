@@ -1,0 +1,84 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>euc</artifactId>
+		<groupId>com.msilm.euc</groupId>
+		<version>1.0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>com.msilm.euc</groupId>
+	<artifactId>euc.service</artifactId>
+	<version>1.0.0.1-SNAPSHOT</version>
+	<name>EUC Business Service</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.sri.nodeservice</groupId>
+			<artifactId>nodeservice.core.nodemgr</artifactId>
+			<version>${nodeservice.version}</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.sri.nodeservice</groupId>
+			<artifactId>nodeservice.core</artifactId>
+			<version>${nodeservice.version}</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.sri.nodeservice</groupId>
+			<artifactId>nodeservice.transform.excel</artifactId>
+			<version>${nodeservice.version}</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>${commons-dbcp.version}</version>
+			<type>jar</type>
+			<scope>runtime</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-collections</groupId>
+					<artifactId>commons-collections</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>commons-pool</groupId>
+					<artifactId>commons-pool</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.sql</groupId>
+					<artifactId>jdbc-stdext</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>junit</groupId>
+					<artifactId>junit</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>xml-apis</groupId>
+					<artifactId>xml-apis</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>xerces</groupId>
+					<artifactId>xerces</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>jdbc</groupId>
+			<artifactId>sqljdbc4</artifactId>
+			<version>${sqljdbc_4.0.version}</version>
+			<type>jar</type>
+			<scope>runtime</scope>
+		</dependency>
+		 <dependency>
+        	<groupId>org.springframework</groupId>
+        	<artifactId>spring-jdbc</artifactId>
+        	<version>${spring.version}</version>
+        </dependency>
+		
+	</dependencies>
+</project>
